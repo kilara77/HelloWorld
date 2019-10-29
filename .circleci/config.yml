@@ -9,11 +9,11 @@
         - run: mkdir -p my_workspace
         - run: echo "Trying out workspaces" > my_workspace/echo-output
         - persist_to_workspace:
-          # Must be an absolute path, or relative path from working_directory
-          root: my_workspace
-          # Must be relative path from root
-          paths:
-            - echo-output        
+           # Must be an absolute path, or relative path from working_directory
+           root: my_workspace
+           # Must be relative path from root
+           paths:
+             - echo-output        
    two:
       docker:
         - image: circleci/ruby:2.4.1
@@ -29,12 +29,12 @@
           else
             echo "Nope!"; exit 1
           fi
- workflows:
-   version: 2
-   one_and_two:
-     jobs:
-       - one
-       - two:
-          requires:
-            - one
-            
+workflows:
+  version: 2
+  one_and_two:
+    jobs:
+      - one
+      - two:
+         requires:
+           - one
+
