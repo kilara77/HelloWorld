@@ -1,0 +1,60 @@
+pipeline {
+    agent {
+        node {
+            label 'linuxworker1'
+        }
+    }
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+    environment {
+        STOR_ACCESS_KEY = credentials('DSOFS_TF_ACCESS_KEY')
+    }
+	
+	
+	stages {
+        stage ('checkout') {
+            steps {
+                script {
+                    currentBuild.displayName = "#$BUILD_NUMBER DSO Demo Provision Infrastructure"
+                    currentBuild.description = "DSO Demo Provision Infrastructure"
+                }
+            }
+        }       
+	
+
+    stage ('provision-infrastructure') {
+        steps {
+            script {
+
+            sh '''
+              az cloud set --name AzureUSGovernment
+            az account set --subscription 9861931e-b25d-4ac3-bc1d-0bcfe8eec8ec
+
+	    az aks create --resource-group DSO-RG-DEMO1 --name dsodemocluster --service-principal 6bf23811-3a98-4905-a4ff-4053391d0362 --client-secret h2_4Oc8e8.sETX9whZG63W_x~306XDjBP8 --enable-addons http_application_routing --kubernetes-version 1.20.7 --generate-ssh-keys --node-count 3 --vm-set-type VirtualMachineScaleSets --load-balancer-sku standard --enable-cluster-autoscaler --min-count 1 --max-count 3
+	    az role assignment create --assignee 6bf23811-3a98-4905-a4ff-4053391d0362 --scope /subscriptions/9861931e-b25d-4ac3-bc1d-0bcfe8eec8ec/resourceGroups/DSO-RG-DEMO1 --role Contributor
+	    az aks update -n dsodemocluster -g DSO-RG-DEMO1 --attach-acr dsocontainerregistry
+	    
+
+#Configure kubectl to connect to your Kubernetes cluster using the az aks get-credentials command.
+az aks get-credentials --resource-group DSO-RG-DEMO1 --name dsodemocluster --overwrite-existing
+
+            '''
+
+            }
+        }
+        } 
+
+  
+
+
+    }
+ //   post {
+  //      always {
+          //  deleteDir()
+   //     }
+   // }
+}

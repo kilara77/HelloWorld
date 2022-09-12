@@ -1,0 +1,334 @@
+pipeline {
+    agent {
+        node {
+            label 'linuxworker1'
+        }
+    }
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+    environment {
+        STOR_ACCESS_KEY = credentials('DSOFS_TF_ACCESS_KEY')
+	    RUN_SONARQUBE_STATUS = 'Pending'	
+	    RUN_LIGHTHOUSE_STATUS = 'Pending'
+    }
+	
+	
+	stages {
+        stage ('checkout') {
+            steps {
+                script {
+                    currentBuild.displayName = "#$BUILD_NUMBER DSO Demo"
+                    currentBuild.description = "DSO Demo Pipeline"
+                }
+            }
+        }       
+	
+
+    stage ('build') {
+        steps {
+            script {
+
+            
+			if (env.BRANCH_NAME == 'dev') {
+
+	    
+	    
+            sh '''
+				cd frontend/ttdevsecopsdemo
+                az cloud set --name AzureUSGovernment
+               az account set --subscription 9861931e-b25d-4ac3-bc1d-0bcfe8eec8ec
+
+               # az acr build --registry DSOContainerRegistry --image ttdevsecopsdemodev:latest .
+		
+		docker build -t ttdevsecopsdemodev:latest .
+		az acr login --name DSOContainerRegistry
+		docker tag ttdevsecopsdemodev:latest dsocontainerregistry.azurecr.us/ttdevsecopsdemodev:latest
+		docker push dsocontainerregistry.azurecr.us/ttdevsecopsdemodev:latest
+		
+                az acr repository list --name DSOContainerRegistry --output table
+            '''
+
+            }
+		    
+
+     if (env.BRANCH_NAME == 'staging') {
+	     
+
+            sh '''
+                cd frontend/ttdevsecopsdemo
+                az cloud set --name AzureUSGovernment
+                az account set --subscription 9861931e-b25d-4ac3-bc1d-0bcfe8eec8ec
+
+                #az acr build --registry DSOContainerRegistry --image ttdevsecopsdemostaging:latest .
+		docker build -t ttdevsecopsdemostaging:latest .
+		az acr login --name DSOContainerRegistry
+		docker tag ttdevsecopsdemostaging:latest dsocontainerregistry.azurecr.us/ttdevsecopsdemostaging:latest
+		docker push dsocontainerregistry.azurecr.us/ttdevsecopsdemostaging:latest
+		
+                az acr repository list --name DSOContainerRegistry --output table
+            '''
+
+            }
+		    
+     if (env.BRANCH_NAME == 'master') {
+
+            sh '''
+                cd frontend/ttdevsecopsdemo
+                az cloud set --name AzureUSGovernment
+                az account set --subscription 9861931e-b25d-4ac3-bc1d-0bcfe8eec8ec
+
+                #az acr build --registry DSOContainerRegistry --image ttdevsecopsdemo:latest .
+		docker build -t ttdevsecopsdemo:latest .
+		az acr login --name DSOContainerRegistry
+		docker tag ttdevsecopsdemo:latest dsocontainerregistry.azurecr.us/ttdevsecopsdemo:latest
+		docker push dsocontainerregistry.azurecr.us/ttdevsecopsdemo:latest
+		
+                az acr repository list --name DSOContainerRegistry --output table
+            '''
+	     }
+		    
+            }
+        }
+        } 
+
+  
+
+    stage('run tests') {
+      parallel {
+  
+
+     stage ('run-owasp-dependency-check') {
+        steps {
+            echo "owasp dependency check"
+            script {
+            if (env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'staging') {
+            sh '''
+            pwd
+           #/home/jenkins/dependency-check/bin/dependency-check.sh --scan frontend --project DSODemo --out owaspreport -f XML
+            '''
+            }
+            }
+            }
+        }
+
+   
+
+  
+    
+  
+
+stage('run-container-scanning'){
+    steps {
+    script {
+          echo "run container scanning"
+          if (env.BRANCH_NAME == 'dev') {
+          sh '''
+	  az acr login -n DSOContainerRegistry
+
+	  docker pull dsocontainerregistry.azurecr.us/ttdevsecopsdemodev:latest
+          trivy image --ignore-unfixed dsocontainerregistry.azurecr.us/ttdevsecopsdemodev:latest
+          '''
+          }
+	    
+	            if (env.BRANCH_NAME == 'staging') {
+          sh '''
+	  az acr login -n DSOContainerRegistry
+
+	  docker pull dsocontainerregistry.azurecr.us/ttdevsecopsdemostaging:latest
+          trivy image dsocontainerregistry.azurecr.us/ttdevsecopsdemostaging:latest
+          '''
+          }
+
+	             if (env.BRANCH_NAME == 'master') {
+          sh '''
+	  az acr login -n DSOContainerRegistry
+
+	  docker pull dsocontainerregistry.azurecr.us/ttdevsecopsdemo:latest
+          trivy image dsocontainerregistry.azurecr.us/ttdevsecopsdemo:latest
+          '''
+          }
+ 
+        }
+        }
+    }
+
+   stage('run-security-scanning'){
+    steps {
+    script {
+        def scannerhome = tool 'SonarQubeScanner';
+        withSonarQubeEnv('SonarQube') {      
+        sh '''
+        cd frontend
+        npm install typescript
+        '''
+        sh '''
+        /home/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/bin/sonar-scanner -Dsonar.projectKey=DSO.Demo -Dsonar.projectName=DSO.Demo -Dsonar.sources=frontend
+        '''
+        RUN_SONARQUBE_STATUS= 'Success'
+        }      
+        }
+        }
+    }
+    }
+    }      
+
+//stage("quality-gate") { 
+//  steps {
+//    script {
+  
+//if (env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'staging') {
+//    sleep(30)
+//    def qualitygate = waitForQualityGate()
+//      if (qualitygate.status != 'OK') {
+//         error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+//      }
+//}
+//    }    
+//    }
+//    }      
+    
+
+
+stage('dev-deploy'){
+    when{
+	branch 'dev'
+	} 
+    steps {
+    script {
+          echo "dev deploy"
+       
+                    sh '''
+	 cd k8s
+	 az aks get-credentials --resource-group DSO-RG-DEMO1 --name dsodemocluster --overwrite-existing
+	 kubectl replace -f deploymentdev.yaml --force
+	 kubectl get service ttdevsecopsdemodev 
+          '''
+
+          echo "DSO Demo app deployed successfully. URL: http://dsodemodev.azurecloudgov.us/"
+
+   }
+        }
+    }
+
+stage('staging-deploy'){
+    when{
+	branch 'staging'
+	}
+
+    steps {
+    script {
+          echo "staging deploy"
+             
+                    sh '''
+	 cd k8s
+	 az aks get-credentials --resource-group DSO-RG-DEMO1 --name dsodemocluster --overwrite-existing
+	 kubectl apply -f deploymentstaging.yaml
+	 kubectl get service ttdevsecopsdemostaging 
+          '''
+
+          echo "DSO Demo app deployed successfully. URL: http://dsodemostaging.azurecloudgov.us/"
+
+
+        }
+        }
+    }
+
+stage('prod-deploy'){
+    when{
+	branch 'master'
+	}
+  
+
+    steps {
+    script {
+          echo "prod deploy"
+                    sh '''
+	 cd k8s
+	 az aks get-credentials --resource-group DSO-RG-DEMO1 --name dsodemocluster --overwrite-existing
+	 kubectl apply -f deployment.yaml
+	 kubectl get service ttdevsecopsdemo 
+          '''
+
+          echo "DSO Demo app deployed successfully. URL: http://dsodemo.azurecloudgov.us/"
+
+        }
+        }
+    }        
+	
+//stage('run-508-testing'){
+ //   steps {
+//    script {
+//          echo "run lighthouse"
+//	  sleep(45)  
+//          if (env.BRANCH_NAME == 'dev') {
+//          	sh label: '', script: 'lighthouse --quiet --no-update-notifier --no-enable-error-reporting --output=json --output-path=./lighthouse-report.json --chrome-flags="--headless" http://ttdevsecopsdemodev.usgovvirginia.cloudapp.usgovcloudapi.net/index.html'
+//		sh label: '', script: 'lighthouse --quiet --no-update-notifier --no-enable-error-reporting --output=json --output-path=./lighthouse-report.json --chrome-flags="--headless" http://dsodemodev.azurecloudgov.us/'              
+//			lighthouseReport 'lighthouse-report.json'
+//			RUN_LIGHTHOUSE_STATUS = 'Success'
+  //        }
+//		  if (env.BRANCH_NAME == 'master'){
+ //         	sh label: '', script: 'lighthouse --quiet --no-update-notifier --no-enable-error-reporting --output=json --output-path=./lighthouse-report.json --chrome-flags="--headless" http://dsodemo.azurecloudgov.us/'
+//		sh label: '', script: 'lighthouse --quiet --no-update-notifier --no-enable-error-reporting --output=json --output-path=./lighthouse-report.json --chrome-flags="--headless" http://dsodemo.azurecloudgov.us/'              
+//			lighthouseReport 'lighthouse-report.json'
+			//RUN_LIGHTHOUSE_STATUS = 'Success'
+            
+        //}
+	//	if (env.BRANCH_NAME == 'staging'){
+          //	sh label: '', script: 'lighthouse --quiet --no-update-notifier --no-enable-error-reporting --output=json --output-path=./lighthouse-report.json --chrome-flags="--headless" http://dsostaging.azurecloudgov.us/'
+  //          sh label: '', script: 'lighthouse --quiet --no-update-notifier --no-enable-error-reporting --output=json --output-path=./lighthouse-report.json --chrome-flags="--headless" http://dsodemodev.azurecloudgov.us/'              
+		//	lighthouseReport 'lighthouse-report.json'
+		//	RUN_LIGHTHOUSE_STATUS = 'Success'
+//        }
+ //       }
+  //  }
+//}
+	
+stage('email-notification'){
+		steps {
+		  script
+	    {
+		//	emailext attachLog: true, attachmentsPattern: 'sonarqubereports/sonarqubeanalysisreport.docx,sonarqubereports/sonarqubeissuesreport.xlsx', body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: Check console output at $BUILD_URL to view the results.', replyTo: 'notifications@techtrend.us', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'ikumarasamy@techtrend.us,sgezen@techtrend.us'
+			
+    env.LCHECKOUT_STATUS = "Success"
+    env.LGITHUB_PROJECT_NAME = "DSO-Demo"
+    env.LINSTALL_DEPENDENCIES_STATUS = "Success"
+    env.LBUILD_APPLICATION = "Success"
+    env.LOWASP_DEPENDENCY_CHECK = "Success"
+    env.LRUN_LINT_STATUS = "Success"
+    env.LRUN_UNIT_TESTS_STATUS = "Success"
+    env.LRUN_E2E_STATUS = "Success"
+    env.LRUN_PA11Y_STATUS = "${RUN_LIGHTHOUSE_STATUS}"
+    env.LRUN_SONARQUBE_STATUS = "${RUN_SONARQUBE_STATUS}"
+    env.LDEPLOY_STATUS = "Success"
+    env.LGIT_BRANCH = "${GIT_BRANCH}"
+
+
+    env.BLUE_OCEAN_URL="${env.JENKINS_URL}/blue/organizations/jenkins/DSO-Demo/detail/$BRANCH_NAME/${BUILD_NUMBER}/pipeline"
+    env.LIGHTHOUSE_REPORT_URL = "${env.JENKINS_URL}/job/DSO-Demo/job/$BRANCH_NAME/${BUILD_NUMBER}/lighthousereport/"
+     env.LSONARQUBE_URL="https://sca.azurecloudgov.us/dashboard?id=DSO.Demo&branch=$BRANCH_NAME"
+
+    env.BLUE_OCEAN_URL_SQ_DOCX="${env.BUILD_URL}artifact/sonarqubereports/sonarqubeanalysisreport.docx"
+    env.BLUE_OCEAN_URL_SQ_XLSX="${env.BUILD_URL}artifact/sonarqubereports/sonarqubeissuesreport.xlsx"
+		    
+     
+
+   	emailext attachLog: false, attachmentsPattern: '', body: '''${SCRIPT, template="dsodemo.template"}''', mimeType: 'text/html', replyTo: 'notifications@techtrend.us', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'ikumarasamy@techtrend.us, sgezen@techtrend.us'
+			
+	}		
+		}
+    }   
+
+
+		
+      
+    }
+ //   post {
+  //      always {
+          //  deleteDir()
+   //     }
+   // }
+}

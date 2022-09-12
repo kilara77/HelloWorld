@@ -1,0 +1,54 @@
+pipeline {
+    agent {
+        node {
+            label 'linuxworker1'
+        }
+    }
+    options {
+        timestamps()
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+    environment {
+        STOR_ACCESS_KEY = credentials('DSOFS_TF_ACCESS_KEY')
+    }
+	
+	
+	stages {
+        stage ('checkout') {
+            steps {
+                script {
+                    currentBuild.displayName = "#$BUILD_NUMBER DSO Demo Delete Infrastructure"
+                    currentBuild.description = "DSO Demo Delete Infrastructure"
+                }
+            }
+        }       
+	
+
+    stage ('provision-infrastructure') {
+        steps {
+            script {
+
+            sh '''
+            az cloud set --name AzureUSGovernment
+            az account set --subscription 9861931e-b25d-4ac3-bc1d-0bcfe8eec8ec
+
+            az aks delete --name dsodemocluster --resource-group DSO-RG-DEMO1 --yes --no-wait
+
+            '''
+
+            }
+        }
+        } 
+
+  
+
+
+    }
+ //   post {
+  //      always {
+          //  deleteDir()
+   //     }
+   // }
+}

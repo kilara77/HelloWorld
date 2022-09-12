@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ttdevsecopsdemodev
+spec:
+  selector:
+      matchLabels:
+        app: ttdevsecopsdemodev
+  replicas: 3
+  template:
+      metadata:
+        labels:
+            app: ttdevsecopsdemodev
+      spec:
+        containers:
+        - name: ttdevsecopsdemodev
+          image: dsocontainerregistry.azurecr.us/ttdevsecopsdemodev:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+        imagePullSecrets:
+           - name: dsoaksclusterkey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: DSO-RG-DEMO1
+    service.beta.kubernetes.io/azure-dns-label-name: ttdevsecopsdemodev
+  name: ttdevsecopsdemodev
+spec:
+  loadBalancerIP: 52.247.129.49
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: ttdevsecopsdemodev

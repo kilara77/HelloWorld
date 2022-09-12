@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ttdevsecopsdemo
+spec:
+  selector:
+      matchLabels:
+        app: ttdevsecopsdemo
+  replicas: 3
+  template:
+      metadata:
+        labels:
+            app: ttdevsecopsdemo
+      spec:
+        containers:
+        - name: ttdevsecopsdemo
+          image: dsocontainerregistry.azurecr.us/ttdevsecopsdemo:v1
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+        imagePullSecrets:
+           - name: dsoaksclusterkey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ttdevsecopsdemo
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: ttdevsecopsdemo

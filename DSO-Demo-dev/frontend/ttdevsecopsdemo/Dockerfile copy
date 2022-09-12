@@ -1,0 +1,15 @@
+## STAGE 1: Build Angular application ##
+FROM node:8 as builder
+COPY . .
+WORKDIR /usr/src/app
+
+RUN npm install
+##RUN $(npm bin)/ng build
+RUN npm build
+
+##STAGE 2: Run nginx to serve application ##
+FROM nginx
+
+COPY --from=builder /dist/ttdevsecopsdemo /usr/share/nginx/html/
+
+EXPOSE 3000

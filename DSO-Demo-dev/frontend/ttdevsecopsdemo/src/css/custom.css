@@ -1,0 +1,170 @@
+.image-center {
+    margin: 0 auto;
+}
+
+.number-training {
+     margin-top: 65px
+}
+
+.logo-demo {
+    margin: 50px 0 40px 0;
+}
+
+.logo-demo img {
+    width: 100px;
+}
+
+.logo-privacy {
+    margin: 100px 0 40px 0;
+}
+
+.logo-privacy img {
+    width: 100px;
+}
+
+.span-number {
+    font-size: 72pt; font-weight: 500; margin-top: 65px; color: #5cb85c; 
+}
+
+.learn-more-training {
+    font-size: 72pt; font-weight: 500; margin-top: 50px; color: #5cb85c; 
+}
+
+.border-bottom-section {
+    border-style: solid;
+    border-bottom-width: 2px;
+    border-left-style: none;
+    border-top-style: none;
+    border-right-style: none;
+    border-color: #777;
+}
+
+.nav-menu-button {
+    position: fixed;
+    /* top: 32px; */
+    right: 20px;
+    float: right;
+}
+
+.border-top {
+    border-style: solid;
+    border-top-width: 2px;
+    border-left-style: none;
+    border-bottom-style: none;
+    border-right-style: none;
+    border-color: #777;
+}
+
+.border-bottom {
+    border-style: solid;
+    border-bottom-width: 14px;
+    border-left-style: none;
+    border-top-style: none;
+    border-right-style: none;
+    border-color: #1c4e97;
+}
+
+.menu-spacing {
+    margin-top: 100px
+}
+
+.blue-text {
+    color: #1c4e97;
+}
+
+.f-400 {
+    font-weight: 400;
+}
+
+.green-text {
+    color: #5cb85c;
+}
+
+.header-450 {
+    max-width: 450px;
+}
+
+.a-menu {
+    max-width: 218px;
+    font-size: 10pt;
+    margin-top: 0px;
+    
+}
+
+.icons-nav {
+    font-size: 64px;
+    float: left;
+    margin-right: 15px;
+    margin-top: 15px
+}
+
+.icons-nav-2 {
+    font-size: 34px;
+    float: left;
+    margin-right: 15px;
+    margin-top: 0px
+}
+.icons-nav-3 {
+    font-size:100px;
+    float: center;
+    margin-right: 15px;
+    margin-top: 0px;
+    color: #7cb854;
+    
+}
+
+.icons-nav-4 {
+    font-size:45px; 
+    padding-left: 57px;
+    margin-top: 35px;
+    color: #7cb854;
+   
+}
+.white-text {
+    color: white;
+}
+
+.indent{
+    margin-left:1.5rem;
+}
+
+.small-lineHeight {
+    line-height: 18px;
+}
+
+.sign-in {
+    position: fixed;
+    top: 32px;
+    right: 20px;    
+}
+
+.margin-top-80 {
+    margin-top: 5px;
+}
+
+@media (max-width:1302px) {
+    .sign-in {
+        position: fixed;
+        top: 32px;
+        right: 95px;
+    }
+
+    .margin-top-80 {
+        margin-top: 80px;
+    }
+}
+
+
+@media (max-width:1196px) {
+    .icons-nav {
+        font-size: 36px;
+        float: left;
+        margin-right: 15px;
+        margin-top: 0px
+    }
+    .a-menu {
+        min-width: 500px;
+        font-size: 12pt;
+        margin-top: 15px;
+    }
+}

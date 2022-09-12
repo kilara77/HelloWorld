@@ -1,0 +1,668 @@
+<html>
+<head></head>
+    <body data-spy="scroll" data-target="#navbar-scroll">  
+            <!-- /.preloader -->
+            <div id="preloader"></div>
+            <div id="top"></div>
+            <!-- /.parallax full screen background image -->
+            
+            <!-- NAVIGATION -->
+            <div id="menu">
+                <nav class="navbar-wrapper navbar-default" role="navigation">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle nav-menu-button" data-toggle="collapse" data-target=".navbar-backyard"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                            <!--  <a class="navbar-brand site-name" href="#top"><img src="images/logo2.png" alt="logo" style="width:128;height:128"></a>
+                           <a class="navbar-brand site-name" href="#top"><img src="images/logo.png" alt="logo"></a> -->
+                        </div>
+                        <div id="navbar-scroll" class="collapse navbar-collapse navbar-backyard navbar-right margin-top-80">
+                            <ul class="nav navbar-nav">
+                                <li><span class="pe-7s-home icons-nav"></span><a (click)="moveToVideo('index')" class="a-menu" target="_blank"  rel="noopener noreferrer">Back to the Home page</a></li>
+                                <li><span class="pe-7s-monitor icons-nav"></span><a (click) = "moveToVideo('video')" class="a-menu">DEMOS: See video demos</a></li>
+                                <li><span class="pe-7s-video icons-nav"></span><a (click)="moveToVideo('training')" class="a-menu">LEARN: FAQs, useful links, and information</a></li>
+                                <li><span class="pe-7s-ticket icons-nav"></span><a (click)="moveToVideo('ticket')" class="a-menu">Place a Ticket for an Issue</a></li>
+                                <!-- <li><span class="pe-7s-comment icons-nav"></span> <a href="rampform.html" class="a-menu">Program On-Ramping Portal</a></li> -->
+                                <!-- <li><span class="pe-7s-network icons-nav"></span><a href="platform-overview.html" class="a-menu">Platform Overview</a></li> -->
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- <div class="sign-in">
+                            <a href="https://login.azurecloudgov.us/devsecops" class="btn btn-success">Sign In</a>
+                    </div> -->
+                </nav>
+            </div>
+            <div class="row" *ngIf="displayindexpage == true">
+
+
+                <!-- /.parallax full screen background image -->
+                <div class="fullscreen landing parallax menu-spacing" style="background-image:url('images/photo.jpg');" data-img-width="7360" data-img-height="3828" data-diff="100">
+                    <div class="">
+                        <div class="container">
+                            <div class="row">
+                                    <div class="col-md-5" style="margin-top: 20%">
+                                        <!-- /.main title -->
+                                            <h1 class="wow header-450"> {{message}}</h1>
+                                        <div class="landing-text wow fadeInUp">
+                                        </div>
+                                        <div >
+                                            <a href="ticket.html" class="btn btn-success btn-lg" (click)="moveToVideo('ticket')" style="font-size: 15px; margin-right: 10px; margin-bottom: 10px">SUBMIT TICKET</a>
+                                            <a href="training.html" class="btn btn-success btn-lg" (click)="moveToVideo('training')" style="font-size: 15px; margin-right: 10px;  margin-bottom: 10px">LEARNING RESOURCES</a>
+                                        </div>
+                                        
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="signup-header wow fadeInUp">
+                                        <form class="form-header" role="form" method="POST" action="contactengine.php" onSubmit="alert()">
+                                            <div class="col-md-6">
+                                                <h3 class="form-title text-center">Your Information</h3>
+                                                <div class="form-group">
+                                                    <label for="name" class="white-text">First Name</label>
+                                                    <input class="form-control input-lg" name="firstName" id="first_name" type="text" placeholder="Your first name" required> </div>
+                                                <div class="form-group">
+                                                    <label for="last_name" class="white-text">Last Name</label>
+                                                    <input class="form-control input-lg" name="lastname" id="last_name" type="text" placeholder="Your last name" required> </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="white-text">Email</label>
+                                                    <input class="form-control input-lg" name="email" id="email" type="email" placeholder="Your email address" required> </div>
+                                                <div class="form-group">
+                                                    <label for="organization" class="white-text">Organization Name</label>
+                                                    <input class="form-control input-lg" name="organizationName" id="org_name" type="text" placeholder="Your organization name" required> </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h3 class="form-title text-center">Your Supervisor Information</h3>
+                                                <div class="form-group">
+                                                    <label for="sup_firstName" class="white-text">First Name</label>
+                                                    <input class="form-control input-lg" name="sup_firstName" id="first_name" type="text" placeholder="Supervisor's first name" required> </div>
+                                                <div class="form-group">
+                                                    <label for="sup_lastname" class="white-text">Last Name</label>
+                                                    <input class="form-control input-lg" name="sup_lastname" id="suplastname" type="text" placeholder="Supervisor's last name" required> </div>
+                                                <div class="form-group">
+                                                    <label for="sup_email" class="white-text">Email</label>
+                                                    <input class="form-control input-lg" name="sup_email" id="supemail" type="email" placeholder="Supervisor's email address" required> </div>
+                                                <div class="form-group">
+                                                    <label for="sup_phone" class="white-text">Phone Number</label>
+                                                    <input class="form-control input-lg" name="sup_phone" id="supphone" type="text" placeholder="Supervisor's phone number" required> </div>
+                                            </div> <strong class="small-lineHeight text-center" style="color: white">* Note: all fields are required</strong>
+                                            <p class="privacy small-lineHeight">
+                                            *If requesting multiple accounts please submit a <a href="ticket.html">ticket</a></p>
+                                            <div class="alert alert-success"  id="alertBar" style="display: none">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                <strong>Thank you.</strong> You request have been successfully sent. 
+                                                <em class="fa fa-check"></em>
+                                            </div>
+                                            
+                                            <div class="form-group last" style="padding-bottom: 15px">
+                                                <input type="submit" class="btn btn-warning btn-block btn-lg" value="REQUEST ACCOUNT"> </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="intro" >
+                    <div class="container">
+                        <div class="row">
+                            <!-- /.intro image -->
+                            <div class="col-md-12 wow">  </div>
+                            <!-- /.intro content -->
+                            
+                            <!-- <div class="col-md-6 col-md-offset-3"><img src="images/logo.png" alt="image" class="img-responsive image-center"></div> -->  <!-- P Demo -->
+                            <div class="col-md-6 col-md-offset-3"><img src="images/DevSecOps.jpg" alt="image" class="img-responsive image-center"></div>
+                            
+                            <div class="col-md-6 col-md-offset-3 wow slideInRight text-center">
+                                <h2>Built for Government SCRUM Teams</h2>
+                                <!--  <h3>Powered by <img src="images/TT-Logo-S.png"></h3>
+                               <p>DevSecOps is a development platform inspired by the way you work. From Developers, Scrum Masters, Release Managers, Program and Product Owners, and Security Authorization Personnel; Our platform enables the Government community to manage continuous ATO compliance while building and maintaining systems more efficiently, securely and cost effectively.</p> -->
+                                <p>DevSecOps is a development platform inspired by the way you work. From Developers, Scrum Masters, Release Managers, Program and Product Owners, and Security Authorization Personnel; Our platform enables Government developer communities to build and maintain applications more efficiently, securely and cost effectively.</p>
+                                <div class="btn-section"><a href="https://login.azurecloudgov.us/devsecops" class="btn-default">Sign In</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.feature-add section -->
+                <div id="feature-add"  style="padding: 70px 0 70px; background-color: #f6f6f6;">
+                    <div class="container">
+                        <div class="row">
+                            <!-- /.intro image -->
+                            <div class="col-md-6 wow slideInLeft"> <img src="images/demoGraphic.png" alt="image" class="img-responsive image-center"> </div>
+                            <!-- /.intro content -->
+                            <div class="col-md-6 wow slideInRight">
+                                <h2>Program On-Ramping </h2>
+                                <p>Submit a request to get your program and/or project connected to DevSecOps pipeline </p>
+                                <div class="btn-section"><a href="rampform.html" class="btn-default">Request</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div id="feature" style="padding: 70px 0 70px; background-color:white;">
+            <div class="container">
+            <div class="row">
+                    <div class="col-md-4 text-center">
+                            <span class="pe-7s-tools icons-nav-3"></span> 
+                        <!--   <img src="images/DevSecOps.jpg" alt="macbook" class="img-responsive  image-center">   -->                                      
+                            
+                                <h2 class="wow fadeInLeft" style="margin-bottom: 5px; ">
+                                    <strong>Integrated Toolkit</strong>
+                                </h2>
+                                <!-- /.header paragraph -->
+                                <div class="landing-text-video wow fadeInLeft">
+                                    <p>DevSecOps provides an integrated toolkit to enable security across the entire development lifecycle and drive automation for configuration and infrastructure as code, cost and portfolio management, shared services integration, and others. Our highly customizable and modular toolkit allows orchestration across multiple roles and teams.</p>
+                                </div>				  
+                        </div>
+                    <div class="col-md-4 text-center">
+                            <span class="pe-7s-network icons-nav-3"></span> 
+                        <!--   <img src="images/DevSecOps.jpg" alt="macbook" class="img-responsive  image-center">   -->                                      
+                            
+                                <h2 class="wow fadeInLeft" style="margin-bottom: 5px; ">
+                                    <strong>Orchestration</strong>
+                                </h2>
+                                <!-- /.header paragraph -->
+                                <div class="landing-text-video wow fadeInLeft">
+                                    <p>
+                                            DevSecOps provides industry leading orchestration tools which enable pipeline as code development. This ensures repeatable and reusable shared pipelines that provide the flexibility to support even the most complex multi-branch and multisystem workflows. 
+                                    </p>
+                                </div>				  
+                        </div>
+
+                        <div class="col-md-4 text-center">
+                                <span class="pe-7s-monitor icons-nav-3"></span> 
+                            <!--   <img src="images/DevSecOps.jpg" alt="macbook" class="img-responsive  image-center">   -->                                      
+                                
+                                    <h2 class="wow fadeInLeft" style="margin-bottom: 5px; ">
+                                        <strong>Developer Focused</strong>
+                                    </h2>
+                                    <!-- /.header paragraph -->
+                                    <div class="landing-text-video wow fadeInLeft">
+                                        <p>Developers are free to leverage their local software development environments if they choose. DevSecOps provides tools to enable local code quality and security validation prior to commit. Developers can focus directly on developing their code without barriers or unknown tools. Developers primary interface with DevSecOps is a dedicated and managed GitHub Enterprise instance.</p>
+                                    </div>				  
+                            </div>
+
+                        
+                
+            </div>  <!-- /.row -->
+            </div>  <!-- /.cotainer -->
+            </div>  <!-- /.feature -->
+
+                <!-- /.feature 2 section -->
+                <div id="feature" style="padding: 70px 0 70px; background-color:white;">
+                    <div class="container">
+                        <div class="row">
+                            <!-- /.feature content -->
+                            <div class="col-md-6 wow fadeInLeft">
+                                <h2>Video Demos</h2>
+                                <p>Are you the visual kind of developer who likes to see how something works because you learn quicker. Not to worry, TechTrend's DevSecOps solution is built with GitHub at its core and has over 200 training videos that will help you get started on this platform.</p>
+                                <div class="btn-section"><a href="video.html" class="btn-default">Learn More</a></div>
+                            </div>
+                            <!-- /.feature image -->
+                            <div class="col-md-6 feature-2-pic wow fadeInRight"> <img src="images/form.png" alt="macbook" class="img-responsive"> </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- /.feature-1 section -->
+                <div id="feature-2"  style="padding: 70px 0 70px; background-color: #f6f6f6;">
+                    <div class="container">
+                        <div class="row">
+                            <!-- /.intro image -->
+                            <div class="col-md-6 wow slideInLeft"> <img src="images/VideoGraphic.png" alt="image" class="img-responsive image-center"> </div>
+                            <!-- /.intro content -->
+                            <div class="col-md-6 wow slideInRight">
+                                <h2>DevSecOps Training and FAQ</h2>
+                                <p>Learn to leverage the DevSecOps ecosystem, use best practices for collaborating on code, or gain an in-depth understanding from the command line with online and in-person classes for all skill levels.</p>
+                                <div class="btn-section"><a href="training.html" class="btn-default">Learn More</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" *ngIf="displayVideoPage == true">
+                <!-- /.parallax full screen background image -->
+                <div class="fullscreen landing parallax" style="background-image:url('images/blue-tech.png');" data-img-width="1920" data-img-height="1080" data-diff="100">
+
+                    <div class="">
+                        <div class="container">
+                            <div class="row">
+                                <!-- LOGO -->
+                                <div class="col-md-8 col-md-offset-2 text-center" style="margin-top: 20%">
+
+                                    <!-- /.logo -->
+                                    <div class="logo-demo wow fadeInDown"> 
+                                        <!-- <a href=""><img style="margin-right: 20px" src="images/logo2-white.png" alt="logo"></a>
+                                        <a href=""><img style="" src="images/logo.png" alt="logo"></a> -->
+                                    </div>
+                                </div> 
+
+                                <div class="col-md-4 text-center">
+                                        <div class="video-header">
+                                                <div class="video-embed wow fadeIn" data-wow-duration="1s">
+                
+                                                    <!-- video embed from YOUTUBE -->
+                                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/w3jLJU7DT5E" frameborder="0" allowfullscreen></iframe>
+                
+                                                </div>
+                                            </div>						
+                
+                                            <!-- /.main title -->
+                                            <h2 class="wow fadeInLeft" style="margin-bottom: 5px; ">
+                                                What is <strong>GitHub</strong>?
+                                            </h2>
+                
+                                            <!-- /.header paragraph -->
+                                            <div class="landing-text-video wow fadeInLeft">
+                                                <p>Ever wondered how GitHub works? Let's see how Eddie and his team use GitHub.</p>
+                                            </div>				  
+                
+                                    </div>
+
+                                    <div class="col-md-4 text-center">
+                                            <div class="video-header">
+                                                    <div class="video-embed wow fadeIn" data-wow-duration="1s">
+                    
+                                                        <!-- video embed from YOUTUBE -->
+                                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/C6MGKHkNtxU" frameborder="0" allowfullscreen></iframe>
+                    
+                                                    </div>
+                                                </div>						
+                    
+                                                <!-- /.main title -->
+                                                <h2 class="wow fadeInLeft" style="margin-bottom: 5px; ">
+                                                    Projects on <strong>GitHub</strong>?
+                                                </h2>
+                    
+                                                <!-- /.header paragraph -->
+                                                <div class="landing-text-video wow fadeInLeft">
+                                                    <p>Projects are an issue management feature on GitHub which will help you organize Issues, Pull Requests, and notes into a Kanban-style board for better visualization and prioritization of work. </p>
+                                                </div>				  
+                    
+                                        </div>
+            
+                                        <div class="col-md-4 text-center">
+                                                <div class="video-header">
+                                                        <div class="video-embed wow fadeIn" data-wow-duration="1s">
+                        
+                                                            <!-- video embed from YOUTUBE -->
+                                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/aJnFGMclhU8" frameborder="0" allowfullscreen></iframe>
+                        
+                                                        </div>
+                                                    </div>						
+                        
+                                                    <!-- /.main title -->
+                                                    <h2 class="wow fadeInLeft" style="margin-bottom: 5px; ">
+                                                        Workflow Strategies
+                                                    </h2>
+                        
+                                                    <!-- /.header paragraph -->
+                                                    <div class="landing-text-video wow fadeInLeft">
+                                                        <p>Two of the most popular workflow strategies in use today are the GitHub Flow and the Git Flow. Learn about the differences and some of the tools available to help you manage your work on GitHub. Visit https://github.com/business to learn more.</p>
+                                                    </div>				  
+                        
+                                            </div>
+
+                                            <div class="col-md-4 text-center">
+                                                    <div class="video-header">
+                                                            <div class="video-embed wow fadeIn" data-wow-duration="1s">
+                            
+                                                                <!-- video embed from YOUTUBE -->
+                                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/gJDtC_tp5w4" frameborder="0" allowfullscreen></iframe>
+                            
+                                                            </div>
+                                                        </div>						
+                            
+                                                        <!-- /.main title -->
+                                                        <h2 class="wow fadeInLeft" style="margin-bottom: 5px; ">
+                                                            Quality Control
+                                                        </h2>
+                            
+                                                        <!-- /.header paragraph -->
+                                                        <div class="landing-text-video wow fadeInLeft">
+                                                            <p>Incremental measures woven into each step of your workflow helps you maintain software quality without sacrificing productivity. Learn the basics of Pre-receive Hooks, Status, and Protected Branches.</p>
+                                                        </div>				  
+                            
+                                                </div>
+                    
+                                                <div class="col-md-4 text-center">
+                                                        <div class="video-header">
+                                                                <div class="video-embed wow fadeIn" data-wow-duration="1s">
+                                
+                                                                    <!-- video embed from YOUTUBE -->
+                                                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/d5wpJ5VimSU" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+                                                                </div>
+                                                            </div>						
+                                
+                                                            <!-- /.main title -->
+                                                            <h2 class="wow fadeInLeft" style="margin-bottom: 5px; ">
+                                                                Pull Requests
+                                                            </h2>
+                                
+                                                            <!-- /.header paragraph -->
+                                                            <div class="landing-text-video wow fadeInLeft">
+                                                                <p>Pull requests are a means of starting a conversation about a proposed change back into a project. We'll be taking a look at the strength of conversation, integration options for fuller information about a change, and cleanup strategy for when a pull request is finished.</p>
+                                                            </div>				  
+                                
+                                                    </div>
+                        
+                                                    <div class="col-md-4 text-center">
+                                                            <div class="video-header">
+                                                                    <div class="video-embed wow fadeIn" data-wow-duration="1s">
+                                    
+                                                                        <!-- video embed from YOUTUBE -->
+                                                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/TJlYiMp8FuY" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+                                                                    </div>
+                                                                </div>						
+                                    
+                                                                <!-- /.main title -->
+                                                                <h2 class="wow fadeInLeft" style="margin-bottom: 5px; ">
+                                                                    <strong>GitHub</strong> Issues
+                                                                </h2>
+                                    
+                                                                <!-- /.header paragraph -->
+                                                                <div class="landing-text-video wow fadeInLeft">
+                                                                    <p>This is a quick tour of GitHub Issues. It offers newcomers a brief overview of what this powerful core feature of GitHub.com can do for developers, designers, and managers using GitHub in both the open source and commercial software worlds. </p>
+                                                                </div>				  
+                                    
+                                                        </div>
+                                
+                                    <div class="col-md-8 col-md-offset-2 text-center">
+                                    <!-- /.subscribe form -->
+                                    <div class="subscribe-form wow fadeInUp">
+                                            <div class="text-center"><a class=" white-text" href="index.html">Back to Main Page</a></div>
+                                        </div>	
+                                    </div>
+
+                                
+                            </div>
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+            <div class="row" *ngIf="displaytrainingPage == true">
+                <div id="feature-2" class=" border-bottom menu-spacing" style="padding: 20px 0 20px;">
+                    <div class="container">
+                        <div class="row">
+                            <!-- /.intro image -->
+                            <div class="col-md-6 wow">
+                                <img src="images/trainingBanner.png" alt="image" class="img-responsive image-center"> </div>
+                            <!-- /.intro content -->
+                            <div class="col-md-6 wow text-center" style="padding: 70px 0 0px">
+                                <h1 class="wow blue-text" style="line-height: 45px; font-weight: 300;">TechTrend DevSecOps-Learning Resources</h1>
+                                <p class="green-text" style="font-weight: 400">Read about DevSecOps training/FAQ available now!</p>
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.feature 2 section -->
+            
+                <div id="feature-2" style="padding: 0px 0 40px;">
+                    <div class="container">
+                        <div class="row">
+                            <!-- /.feature content -->
+                            <div class="col-md-2 feature-2-pic wow ">
+                                <img src="images/DevSecOps.jpg" alt="macbook" class="img-responsive  image-center"> </div>
+                            <div class="col-md-10 wow " style="padding-top: 20px">
+                                <h2 class="blue-text f-400">DevSecOps Training/FAQ</h2>
+                                <p>Learn to leverage the DevSecOps ecosystem, use best practices for collaborating on code, or gain an in-depth
+                                    understanding of Git from the command line with online and in-person classes for all skill levels.</p>
+            
+                            </div>
+                            <!-- /.feature image -->
+            
+                        </div>
+                    </div>
+                </div>
+            
+                <!--    contents-->
+                <div id="feature-2" style="padding: 0px 0 40px;">
+                    <div class="container border-top">
+                        <div class="row" style="padding: 20px">
+                            <input class="form-control" id="mySearch" onkeyup="searchFAQ()" type="text" placeholder="How can we help?">
+            
+            
+                            <!-- Questions -->
+                            <div id="questions">
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">How do I request a GitHub account</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        Send an email to FGC-Support@techtrend.us, please include your organization and supervisor's email.
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Is there a helpdesk email?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        Please email FGC-Support@techtrend.us with any DevSecOps related issue.
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Where can I get a good overview of GitHub?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        The following video helps to provide a good overview of GitHub. <br>
+                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/w3jLJU7DT5E" frameborder="0" gesture="media" allow="encrypted-media"
+                                            allowfullscreen></iframe>
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Where's a good place to start learn how to use GitHub?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        Learn how to use GitHub with an interactive
+                                        <a href="https://guides.github.com/activities/hello-world/">HelloWorld Project</a>.
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">What is a good place to have technical FAQs answered?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        Many answers to your GitHub questions can be found here:
+                                        <a href="https://help.github.com/">https://help.github.com/</a>
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Migrating from Teamforge to GitHub?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        TeamForge SVN to GitHub Code Migration Instruction:
+                                        <a href="./files/TFtoGitHubMigrationGuide.pdf">Migration Document</a>
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Any other resources I need?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        It's highly suggested that you download
+                                        <a href="https://desktop.github.com/">GitHub Desktop</a>
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">How do I get training on DevSecOps training?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        TechTrend hosts one hour virtual training session that anyone is free to attend. Information regarding
+                                        the next training session can be found on this sites homepage. On-demand GitHub training can also be
+                                        found at the following link
+                                        <a href="https://services.github.com/on-demand/">https://services.github.com/on-demand/</a>
+                                        To request additional on-demand training regarding DevSecOps kindly send a email to FGC-Support@techtrend.us.
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">How to edit README Markdown files</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        Learn how to quickly and easily edit a Markdown file here:
+                                        <a href="https://guides.github.com/introduction/git-handbook/">https://guides.github.com/introduction/git-handbook/</a>
+            
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">How do you document projects on GitHub?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        Documentation is key to any project. Learn how documentation is done in GitHub here:
+                                        <a href="https://guides.github.com/features/wikis/">https://guides.github.com/features/wikis/</a>
+            
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">How is version management done in GitHub?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        GitHub uses branching to provide a better approach to version management.
+                                        <a href="https://guides.github.com/introduction/git-handbook/">https://guides.github.com/introduction/git-handbook/</a>
+            
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">What is the GitHub Flow?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        Learn how GitHub functions at the following link
+                                        <a href="https://guides.github.com/introduction/flow/">https://guides.github.com/introduction/flow/</a>
+            
+                                    </div>
+                                </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">How do I use Git?</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <a href="https://guides.github.com/introduction/git-handbook/">https://guides.github.com/introduction/git-handbook/</a>
+                
+                                        </div>
+                                    </div>
+            
+                                <div class="panel panel-default margin-20-top">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Any other useful resources?</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                            There are many useful GitHub resources available with a quick search on the web. Some of our favorite training videos can be found on the YouTube GitHub Training Channel: 
+                                        <a href="https://www.youtube.com/githubguides">https://www.youtube.com/githubguides</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            
+                <div id="feature-2" style="padding: 0px 0 40px;">
+                    <div class="container">
+                        <div class="row">
+                            <!-- /.feature content -->
+            
+                            <div class="col-md-offset-2 col-md-8 wow ">
+                                <h3 class="blue-text f-400">Other Resources</h3>
+                                <a href="https://learngitbranching.js.org/" class="col-md-4 text-center">Interactive Git Branching</a>
+                                <a href="https://www.youtube.com/githubguides" class="col-md-4 text-center">Youtube - GitHub Channel</a>
+                                <a href="https://services.github.com/on-demand/" class="col-md-4 text-center">Free On Demand - Training</a>
+            
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="displayticketPage == true">
+                <div id="feature-2" class=" border-bottom menu-spacing" style="padding: 20px 0 20px;">
+                    <div class="container">
+                        <div class="row">
+                            <!-- /.intro image -->
+                            <div class="col-md-6 wow"> <img src="images/trainingBanner.png" alt="image" class="img-responsive image-center"> </div>
+                            <!-- /.intro content -->
+                            <div class="col-md-6 wow text-center" style="padding: 70px 0 0px">
+                                <h1 class="wow blue-text" style="line-height: 45px; font-weight: 300;">DevSecOps Support Ticket</h1>
+                                <p class="green-text" style="font-weight: 400">Submit a Request</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="feature-2" class=" border-bottom" style="padding: 20px 0 20px;">
+                        <div class="container">
+                            <div class="row">
+                                    <form style="padding: 50px" role="form" method="POST" action="ticketengine.php" onSubmit="alert()">
+                                            
+                                            <div class="form-group">
+                                                    <label for="exampleFormControlInput1">Name</label>
+                                                    <input type="text" class="form-control" name="fullName" id="full_name" placeholder="Enter you name">
+                                                  </div>
+                                            <div class="form-group">
+                                              <label for="exampleFormControlInput1">Email Address</label>
+                                              <input type="email" class="form-control" name="usdaemail" id="usda_email" placeholder="name@example.com">
+                                            </div>
+            
+                                            <div class="form-group">
+                                                    <label for="exampleFormControlInput1">Phone Number</label>
+                                                    <input type="text" class="form-control" name="phone" id="phone_Number" placeholder="XXX-XXX-XXXX">
+                                                  </div>
+                                            
+                                            <div class="form-group">
+                                              <label for="exampleFormControlTextarea1">Comments</label>
+                                              <textarea class="form-control" name="message" id="comments" rows="3"></textarea>
+                                            </div>
+            
+                                            <input type="submit" class="btn btn-success btn-lg" value="SUBMIT TICKET"> 
+                                          </form>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+           
+    <!-- /.footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="col-sm-12 col-sm-offset-0">
+                
+                <!-- /.social links -->
+                <div class="social text-center" style="font-size: 9pt">
+                        <p style="color: #fff">This is not an official government website. v1.0 02/16/2022</p>
+                    
+                    <ul>
+                        <li><a class="wow fadeInUp" (click)="moveToVideo('index')">HOME</a></li>
+                        <li><a class="wow fadeInUp" (click) = "moveToVideo('video')" data-wow-delay="0.2s">DEMOS</a></li>
+                        <li><a class="wow fadeInUp" (click)="moveToVideo('training')" data-wow-delay="0.4s">TRAINING</a></li>
+                        <li><a class="wow fadeInUp" (click)="moveToVideo('ticket')" data-wow-delay="0.6s">CREATE A TICKET</a></li>
+                        <!-- <li><a class="wow fadeInUp" href="rampform.html" data-wow-delay="0.8s">PROGRAM ON-RAMPING</a></li> -->
+                    </ul>
+                </div>
+                <div class="text-center wow fadeInUp" style="font-size: 14px;"></div> <a href="#" class="scrollToTop"><em class="pe-7s-up-arrow pe-va"></em></a> </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
+
+<router-outlet></router-outlet>
